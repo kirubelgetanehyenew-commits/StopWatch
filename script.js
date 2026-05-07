@@ -61,37 +61,50 @@ function startAnimationLoop() {
 // Render laps list
 function renderLaps() {
   if (laps.length === 0) {
-    lapsList.innerHTML = `<div class="empty-laps">🏁 No laps recorded. Press 'Lap' to capture splits.</div>`;
-    lapStatsSpan.innerText = `0 laps recorded`;
+    lapsList.innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">⏱️</div>
+        <p>No laps recorded yet</p>
+        <span>Press the lap button to track your splits</span>
+      </div>
+    `;
+    lapStatsSpan.innerText = `0 Laps`;
     return;
   }
   
-  lapStatsSpan.innerText = `${laps.length} lap${laps.length !== 1 ? 's' : ''} recorded`;
+  lapStatsSpan.innerText = `${laps.length} ${laps.length === 1 ? 'Lap' : 'Laps'}`;
   
   let html = '';
   for (let i = 0; i < laps.length; i++) {
     const lap = laps[i];
     let diffText = '';
+    
     if (i === 0) {
-      diffText = `start → ${lap.lapTimeFormatted}`;
+      diffText = `Started at ${lap.lapTimeFormatted}`;
     } else {
       const prevLapMs = laps[i-1].absoluteTimeMs;
       const currentLapMs = lap.absoluteTimeMs;
       const diffMs = currentLapMs - prevLapMs;
       const diffFormatted = formatTimeFromMs(diffMs);
-      diffText = `+ ${diffFormatted}`;
+      diffText = `+${diffFormatted}`;
     }
+    
     html += `
       <div class="lap-item">
-        <span class="lap-num">#${lap.lapIndex}</span>
-        <span class="lap-time">⌚ ${lap.lapTimeFormatted}</span>
-        <span style="font-size:0.75rem; opacity:0.8;">${diffText}</span>
+        <div class="lap-number">
+          <div class="lap-badge">${lap.lapIndex}</div>
+          <div class="lap-label">Lap ${lap.lapIndex}</div>
+        </div>
+        <div class="lap-time">${lap.lapTimeFormatted}</div>
+        <div class="lap-diff">${diffText}</div>
       </div>
     `;
   }
   lapsList.innerHTML = html;
-  const container = document.querySelector('.laps-list-container');
-  if (container) container.scrollTop = container.scrollHeight;
+  
+  // Auto-scroll to latest lap
+  const wrapper = document.querySelector('.laps-list-wrapper');
+  if (wrapper) wrapper.scrollTop = wrapper.scrollHeight;
 }
 
 // Record a lap
@@ -99,19 +112,7 @@ function recordLap() {
   const currentTotalMs = getCurrentElapsedMs();
   
   if (laps.length >= 50) {
-    const notifMsg = document.createElement('div');
-    notifMsg.textContent = '⚠️ Max 50 laps reached, clear some laps';
-    notifMsg.style.position = 'fixed';
-    notifMsg.style.bottom = '20px';
-    notifMsg.style.left = '20px';
-    notifMsg.style.backgroundColor = '#b91c1c';
-    notifMsg.style.color = 'white';
-    notifMsg.style.padding = '6px 12px';
-    notifMsg.style.borderRadius = '30px';
-    notifMsg.style.fontSize = '12px';
-    notifMsg.style.zIndex = '999';
-    document.body.appendChild(notifMsg);
-    setTimeout(() => notifMsg.remove(), 1500);
+    showNotification('⚠️ Maximum 50 laps reached! Clear some laps to continue.', 'error');
     return;
   }
   
@@ -125,13 +126,16 @@ function recordLap() {
   });
   
   renderLaps();
+  showNotification(`✅ Lap ${lapCounter} recorded: ${formattedMain}`, 'success');
 }
 
 // Clear all laps
 function clearLaps() {
+  if (laps.length === 0) return;
   laps = [];
   lapCounter = 0;
   renderLaps();
+  showNotification('🗑️ All laps cleared', 'info');
 }
 
 // Start stopwatch
@@ -166,7 +170,60 @@ function resetStopwatch() {
   clearLaps();
   lapCounter = 0;
   updateTimerDisplay();
+  showNotification('🔄 Stopwatch reset', 'info');
 }
+
+// Notification system
+function showNotification(message, type = 'info') {
+  const notification = document.createElement('div');
+  notification.textContent = message;
+  notification.style.cssText = `
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(0, 0, 0, 0.8);
+    backdrop-filter: blur(10px);
+    color: white;
+    padding: 12px 20px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 500;
+    z-index: 1000;
+    animation: slideIn 0.3s ease;
+    border-left: 3px solid ${type === 'success' ? '#00d4ff' : type === 'error' ? '#f5576c' : '#fee140'};
+  `;
+  document.body.appendChild(notification);
+  setTimeout(() => {
+    notification.style.animation = 'slideOut 0.3s ease';
+    setTimeout(() => notification.remove(), 300);
+  }, 2000);
+}
+
+// Add animation styles
+const style = document.createElement('style');
+style.textContent = `
+  @keyframes slideIn {
+    from {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateX(0);
+      opacity: 1;
+    }
+  }
+  @keyframes slideOut {
+    from {
+      transform: translateX(0);
+      opacity: 1;
+    }
+    to {
+      transform: translateX(100%);
+      opacity: 0;
+    }
+  }
+`;
+document.head.appendChild(style);
 
 // Keyboard shortcuts
 function bindKeyboardShortcuts() {

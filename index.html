@@ -3,40 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Precision Stopwatch | Lap & Split Tracker</title>
+  <title>Elegant Stopwatch | Modern Timer</title>
   <link rel="stylesheet" href="style.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
 </head>
 <body>
-<div class="stopwatch-card">
-  <!-- TIME DISPLAY -->
-  <div class="time-display">
-    <div class="timer" id="timerDisplay">00:00:00.00</div>
+  <div class="background-gradient">
+    <div class="floating-circle circle-1"></div>
+    <div class="floating-circle circle-2"></div>
+    <div class="floating-circle circle-3"></div>
   </div>
 
-  <!-- BUTTON CONTROLS -->
-  <div class="button-panel">
-    <button class="btn btn-start" id="startBtn" aria-label="Start">▶ Start</button>
-    <button class="btn btn-pause" id="pauseBtn" aria-label="Pause">⏸ Pause</button>
-    <button class="btn btn-reset" id="resetBtn" aria-label="Reset">🔄 Reset</button>
-    <button class="btn btn-lap" id="lapBtn" aria-label="Record Lap">⏱️ Lap</button>
-    <button class="btn btn-clear-laps" id="clearLapsBtn" aria-label="Clear Laps">🗑 Clear Laps</button>
-  </div>
+  <div class="container">
+    <div class="stopwatch-wrapper">
+      <!-- Header -->
+      <div class="header">
+        <div class="icon-badge">⚡</div>
+        <h1>Precision Timer</h1>
+        <p>Lap & Split Tracker</p>
+      </div>
 
-  <!-- LAPS / SPLITS SECTION -->
-  <div class="laps-section">
-    <div class="laps-header">
-      <h3>📋 Laps & Splits</h3>
-      <div class="lap-stats" id="lapStats">0 laps recorded</div>
-    </div>
-    <div class="laps-list-container">
-      <div class="laps-list" id="lapsList">
-        <div class="empty-laps">✨ Press 'Lap' to record a split time</div>
+      <!-- Time Display -->
+      <div class="time-wrapper">
+        <div class="time-card">
+          <div class="time-glow"></div>
+          <div class="timer" id="timerDisplay">00:00:00.00</div>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="action-buttons">
+        <button class="action-btn start-btn" id="startBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M5 3L19 12L5 21V3Z" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linejoin="round"/>
+          </svg>
+          <span>Start</span>
+        </button>
+        <button class="action-btn pause-btn" id="pauseBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <rect x="6" y="4" width="4" height="16" fill="currentColor"/>
+            <rect x="14" y="4" width="4" height="16" fill="currentColor"/>
+          </svg>
+          <span>Pause</span>
+        </button>
+        <button class="action-btn reset-btn" id="resetBtn">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M23 4L23 10L17 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M20.49 15C19.6368 17.235 18.0633 19.1232 16.0068 20.3794C13.9503 21.6355 11.5211 22.1884 9.12953 21.9538C6.73797 21.7192 4.46874 20.7121 2.68465 19.0865C0.900561 17.4608 -0.292673 15.3149 -0.493449 13.0005C-0.694225 10.6861 0.105046 8.38661 1.60699 6.57863C3.10893 4.77065 5.21665 3.55736 7.51774 3.14789C9.81884 2.73843 12.1756 3.15901 14.195 4.33611C16.2144 5.51321 17.764 7.37838 18.58 9.6L23 10" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+          <span>Reset</span>
+        </button>
+      </div>
+
+      <!-- Secondary Actions -->
+      <div class="secondary-actions">
+        <button class="sec-btn lap-btn" id="lapBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12 8V12L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <circle cx="12" cy="12" r="9" stroke="currentColor" stroke-width="2"/>
+          </svg>
+          <span>Record Lap</span>
+        </button>
+        <button class="sec-btn clear-btn" id="clearLapsBtn">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M3 6H5H21" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M8 6V4C8 3 9 2 10 2H14C15 2 16 3 16 4V6" stroke="currentColor" stroke-width="2"/>
+            <path d="M19 6V20C19 21 18 22 17 22H7C6 22 5 21 5 20V6" stroke="currentColor" stroke-width="2"/>
+            <path d="M10 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            <path d="M14 11V17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+          <span>Clear All</span>
+        </button>
+      </div>
+
+      <!-- Laps Section -->
+      <div class="laps-container">
+        <div class="laps-header">
+          <div class="laps-title">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M20 12V8H4V12M20 12L12 16L4 12M20 12V16M4 12V16" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 20H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+              <path d="M4 4H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+            </svg>
+            <h3>Lap History</h3>
+          </div>
+          <div class="lap-counter" id="lapStats">0 Laps</div>
+        </div>
+        <div class="laps-list-wrapper">
+          <div class="laps-list" id="lapsList">
+            <div class="empty-state">
+              <div class="empty-icon">⏱️</div>
+              <p>No laps recorded yet</p>
+              <span>Press the lap button to track your splits</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Keyboard Shortcuts Hint -->
+      <div class="shortcuts-hint">
+        <div class="hint-item"><kbd>Space</kbd> Start/Pause</div>
+        <div class="hint-item"><kbd>L</kbd> Lap</div>
+        <div class="hint-item"><kbd>R</kbd> Reset</div>
+        <div class="hint-item"><kbd>C</kbd> Clear</div>
       </div>
     </div>
   </div>
-  <footer>⏱️ Lap difference shows time since last lap | max 50 entries</footer>
-</div>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 </body>
 </html>
