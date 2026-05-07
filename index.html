@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Precision Stopwatch | Lap & Split Tracker</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="stopwatch-card">
+  <!-- TIME DISPLAY -->
+  <div class="time-display">
+    <div class="timer" id="timerDisplay">00:00:00.00</div>
+  </div>
+
+  <!-- BUTTON CONTROLS -->
+  <div class="button-panel">
+    <button class="btn btn-start" id="startBtn" aria-label="Start">▶ Start</button>
+    <button class="btn btn-pause" id="pauseBtn" aria-label="Pause">⏸ Pause</button>
+    <button class="btn btn-reset" id="resetBtn" aria-label="Reset">🔄 Reset</button>
+    <button class="btn btn-lap" id="lapBtn" aria-label="Record Lap">⏱️ Lap</button>
+    <button class="btn btn-clear-laps" id="clearLapsBtn" aria-label="Clear Laps">🗑 Clear Laps</button>
+  </div>
+
+  <!-- LAPS / SPLITS SECTION -->
+  <div class="laps-section">
+    <div class="laps-header">
+      <h3>📋 Laps & Splits</h3>
+      <div class="lap-stats" id="lapStats">0 laps recorded</div>
+    </div>
+    <div class="laps-list-container">
+      <div class="laps-list" id="lapsList">
+        <div class="empty-laps">✨ Press 'Lap' to record a split time</div>
+      </div>
+    </div>
+  </div>
+  <footer>⏱️ Lap difference shows time since last lap | max 50 entries</footer>
+</div>
+
+<script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,241 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  min-height: 100vh;
+  background: linear-gradient(145deg, #0b1120 0%, #111827 100%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Segoe UI', 'SF Pro Text', 'Inter', system-ui, -apple-system, 'Roboto', monospace;
+  padding: 1rem;
+}
+
+.stopwatch-card {
+  max-width: 700px;
+  width: 100%;
+  background: rgba(18, 25, 45, 0.75);
+  backdrop-filter: blur(12px);
+  border-radius: 3.5rem;
+  box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  padding: 2rem 1.8rem 2.2rem 1.8rem;
+  border: 1px solid rgba(74, 144, 226, 0.25);
+  transition: all 0.2s ease;
+}
+
+.time-display {
+  background: #03060c;
+  border-radius: 3rem;
+  padding: 1.5rem 0.5rem;
+  margin-bottom: 2rem;
+  box-shadow: inset 0 5px 12px rgba(0, 0, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.3);
+  border: 1px solid #2d3a5e;
+}
+
+.timer {
+  font-family: 'JetBrains Mono', 'Fira Mono', 'Courier New', monospace;
+  font-weight: 600;
+  text-align: center;
+  font-size: clamp(2.8rem, 12vw, 5rem);
+  letter-spacing: 5px;
+  color: #cbd5e6;
+  text-shadow: 0 0 4px #0a2540;
+}
+
+.button-panel {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 2rem;
+}
+
+.btn {
+  padding: 0.9rem 1.8rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  font-family: inherit;
+  border: none;
+  border-radius: 2.5rem;
+  cursor: pointer;
+  transition: transform 0.1s ease, background 0.2s, box-shadow 0.2s;
+  letter-spacing: 0.5px;
+  background: #1f2a44;
+  color: #eef5ff;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn:active {
+  transform: scale(0.96);
+}
+
+.btn-start {
+  background: #0f7b3a;
+  box-shadow: 0 4px 12px rgba(16, 185, 80, 0.3);
+}
+.btn-start:hover {
+  background: #169b48;
+}
+
+.btn-pause {
+  background: #b45a1c;
+  box-shadow: 0 4px 12px rgba(245, 158, 11, 0.2);
+}
+.btn-pause:hover {
+  background: #cc721f;
+}
+
+.btn-reset {
+  background: #3b2e4b;
+  box-shadow: 0 4px 10px rgba(100, 80, 140, 0.3);
+}
+.btn-reset:hover {
+  background: #52406b;
+}
+
+.btn-lap {
+  background: #1e4d6f;
+  box-shadow: 0 4px 10px rgba(56, 189, 248, 0.2);
+}
+.btn-lap:hover {
+  background: #2c6791;
+}
+
+.btn-clear-laps {
+  background: #2e2c3a;
+  color: #d1d5ff;
+}
+.btn-clear-laps:hover {
+  background: #413e54;
+}
+
+.laps-section {
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: 2rem;
+  padding: 1rem 0.5rem 0.8rem 0.5rem;
+  border: 1px solid rgba(72, 108, 176, 0.4);
+}
+
+.laps-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  padding: 0 1rem 0.7rem 1rem;
+  border-bottom: 1px dashed #3e537b;
+  flex-wrap: wrap;
+  gap: 0.8rem;
+}
+
+.laps-header h3 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+  background: linear-gradient(120deg, #b9d0ff, #9cb4f0);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+
+.lap-stats {
+  font-family: monospace;
+  font-size: 0.85rem;
+  color: #8da3d5;
+  background: #0f172ab3;
+  padding: 0.3rem 0.8rem;
+  border-radius: 2rem;
+}
+
+.laps-list-container {
+  max-height: 260px;
+  overflow-y: auto;
+  margin-top: 0.8rem;
+  padding: 0.2rem 0.4rem;
+  scrollbar-width: thin;
+}
+
+.laps-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.lap-item {
+  background: #111a2be0;
+  backdrop-filter: blur(4px);
+  border-radius: 2rem;
+  padding: 0.6rem 1.2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 0.9rem;
+  font-weight: 500;
+  border-left: 4px solid #3b82f6;
+  color: #cfdfed;
+}
+
+.lap-num {
+  font-weight: 700;
+  background: #1f365f;
+  padding: 0.2rem 0.7rem;
+  border-radius: 2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.5px;
+}
+
+.lap-time {
+  font-weight: 600;
+  letter-spacing: 1px;
+  background: #02061770;
+  padding: 0.2rem 0.8rem;
+  border-radius: 2rem;
+  font-family: monospace;
+}
+
+.empty-laps {
+  text-align: center;
+  padding: 2rem 1rem;
+  color: #6c86a8;
+  font-style: italic;
+  font-size: 0.9rem;
+}
+
+.laps-list-container::-webkit-scrollbar {
+  width: 5px;
+}
+.laps-list-container::-webkit-scrollbar-track {
+  background: #0f172a;
+  border-radius: 10px;
+}
+.laps-list-container::-webkit-scrollbar-thumb {
+  background: #3b82f6;
+  border-radius: 10px;
+}
+
+footer {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.7rem;
+  color: #5f7db0;
+}
+
+@media (max-width: 500px) {
+  .stopwatch-card {
+    padding: 1.2rem;
+  }
+  .btn {
+    padding: 0.6rem 1.2rem;
+    font-size: 0.9rem;
+  }
+  .lap-item {
+    padding: 0.4rem 1rem;
+    font-size: 0.75rem;
+  }
+}
